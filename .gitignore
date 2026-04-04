@@ -1,0 +1,47 @@
+# ── Virtual Environment ────────────────────────────────
+venv/
+env/
+.env/
+.venv/
+
+# ── Environment Variables ──────────────────────────────
+.env
+.env.local
+.env.production
+
+# ── Database ───────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Python Cache ───────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Pytest / Testing ───────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── IDE & Editor ───────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+*.suo
+*.user
+
+# ── OS Files ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Logs ───────────────────────────────────────────────
+*.log
+logs/
+
+# ── Build / Dist ───────────────────────────────────────
+dist/
+build/
+*.egg-info/
