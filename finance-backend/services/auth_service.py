@@ -6,38 +6,40 @@ from schemas.user import UserCreate
 from utils.hashing import hash_password, verify_password
 from utils.jwt import create_access_token
 
+
 def register_user(data: UserCreate, db: Session) -> User:
-    existing_user = db.query(User).filter(User.email == data.email).first()
-    if existing_user:
+    existing = db.query(User).filter(User.email == data.email).first()
+    if existing:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Email already registered"
+            detail="An account with this email already exists",
         )
-    
-    user = user(
+
+    new_user = User(
         name=data.name,
         email=data.email,
         hashed_password=hash_password(data.password),
-        role=data.role
+        role=data.role,
     )
-    db.add(user)
+    db.add(new_user)
     db.commit()
-    db.refresh(user)
-    return user
+    db.refresh(new_user)
+    return new_user
+
 
 def login_user(email: str, password: str, db: Session) -> str:
-    user = db.query(User).filter(User.email == email).first()
+    found_user = db.query(User).filter(User.email == email).first()
 
-    if not user or not verify_password(password, user.hashed_password):
+    if not found_user or not verify_password(password, found_user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password"
+            detail="Invalid email or password",
         )
-    
-    if not user.is_active:
+
+    if not found_user.is_active:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="User account is inactive"
+            detail="Account is inactive.",
         )
-    
-    return create_access_token({"sub": user.id, "role": user.role})
+
+    return create_access_token({"sub": int(found_user.id), "role": str(found_user.role)})
