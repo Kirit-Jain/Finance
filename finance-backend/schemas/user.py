@@ -15,7 +15,7 @@ class UserCreate(BaseModel):
     def name_not_empty(cls, v: str) -> str:
         if not v.strip():
             raise ValueError("Name cannot be empty")
-        return v.strip
+        return v.strip()
     
     @field_validator("password")
     @classmethod
