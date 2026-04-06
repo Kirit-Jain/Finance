@@ -1,10 +1,13 @@
 import os
 from datetime import datetime, timedelta, timezone
 
-from dotenv import load_dotenv
-import jwt
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-load_dotenv()
+import jwt
 
 SECRET_KEY = os.getenv("SECRET_KEY", "change-this-secret-in-production")
 ALGORITHM = "HS256"
