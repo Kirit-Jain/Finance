@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from models.user import User
-from schemas.auth import UserCreate
+from schemas.user import UserCreate
 from utils.hashing import hash_password, verify_password
 from utils.jwt import create_access_token
 

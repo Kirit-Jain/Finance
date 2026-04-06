@@ -13,16 +13,16 @@ def create_transaction(data: TransactionCreate, created_by: int, db: Session) ->
     db.refresh(tx)
     return tx
 
-def list_transaction(filters: TransactionFilters, db: Session) -> Transaction:
-    query = db.query(Transaction).filter(Transaction.type == filters.type)
+def list_transactions(filters: TransactionFilters, db: Session) -> list[Transaction]:
+    query = db.query(Transaction).filter(Transaction.is_deleted == False)
 
-    if filter.type:
+    if filters.type:
         query = query.filter(Transaction.type == filters.type)
-    if filter.category:
+    if filters.category:
         query = query.filter(Transaction.category.ilike(f"%{filters.category}%"))
-    if filter.date_from:
+    if filters.date_from:
         query = query.filter(Transaction.date >= filters.date_from)
-    if filter.date_to:
+    if filters.date_to:
         query = query.filter(Transaction.date <= filters.date_to)
 
     return query.order_by(Transaction.date.desc()).all()

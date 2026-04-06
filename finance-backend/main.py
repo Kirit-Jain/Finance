@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from database import Base, engine
+import models
+from routers import auth, transaction, dashboard, users
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Finance Dasboard API",
@@ -26,6 +30,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register all the routes
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(transaction.router)
+app.include_router(dashboard.router)
 
 @app.get("/", tags=["Health"], summary="Health Check")
 def health_check():

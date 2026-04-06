@@ -61,7 +61,7 @@ def get_recent_activity(db: Session, limit: int = 10) -> list[dict]:
             "type": row.type,
             "category": row.category,
             "date": row.date,
-            "note": row.note,
+            "note": row.notes,
         }
         for row in rows
     ]

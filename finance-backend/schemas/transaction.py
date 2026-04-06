@@ -9,7 +9,7 @@ class TransactionCreate(BaseModel):
     type: TransactionType
     category: str
     date: datetime
-    note: str | None = None
+    notes: str | None = None
 
     @field_validator("amount")
     @classmethod
@@ -23,7 +23,7 @@ class TransactionCreate(BaseModel):
     def category_not_empty(cls, v: str) -> str:
         if not v.strip():
             raise ValueError("Category cannot be empty")
-        return v.strip
+        return v.strip()
     
 class TransactionUpdate(BaseModel):
     amount: float | None = None
@@ -45,7 +45,7 @@ class TransactionOut(BaseModel):
     type: TransactionType
     category: str
     date: datetime
-    note: str | None = None
+    notes: str | None = None
     created_by: int
     created_at: datetime
     updated_at: datetime
